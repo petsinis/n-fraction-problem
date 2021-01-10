@@ -87,19 +87,6 @@ exec("problem.addConstraint(lambda "+lambda_par+": "+lambda_exp+"==1, ("+lambda_
 
 
 
-#make list with variable names i.e. for n=3 -> ["1","2","3","4","5","6","7","8","9"]
-string="["    
-for k in range(3*n):
-    string=string+"\""+str(k+1)+"\","
-string=string[0:-1]+"]" 
-
-#add eqeuality and frequency constraint to the problem       
-#exec("problem.addConstraint(FunctionConstraint(constr_all),"+string+")")
-
-
-
-
-
 #find one solution to the problem (if you want to find all solutions use problem.getSolutions())
 print("Find solution for n-fraction problem with n = "+str(n)+"...")
 sol=problem.getSolution() #X1/(Y1*Z1)+X2/(Y2*Z2)+X3/(Y3*Z3) = 1 <=> '1'/('4''7')+'2'/('5''8')+'3'/('6''9') = 1

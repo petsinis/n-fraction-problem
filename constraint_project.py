@@ -11,7 +11,7 @@ from constraint import *
 
 
 problem = Problem() #init a constrait problem
-n=6 #set n value, i.e. n=3: X1/(Y1Z1)+X2/(Y2Z2)+X3/(Y3Z3) = 1 
+n=3 #set n value, i.e. n=3: X1/(Y1Z1)+X2/(Y2Z2)+X3/(Y3Z3) = 1 
 
 print("Set variables and constraints for n-fraction problem with n = "+str(n)+".")
 print()
@@ -42,14 +42,19 @@ if(n==6):
                                                      , n=2, exact=True)) #[0..9] at exactly two times
 elif(n>2): 
     for k in range(9):
-        problem.addConstraint(SomeNotInSetConstraint([(i+1)  for i in range(9) if (i!=k)])) #[0..9] at least one time 
+        problem.addConstraint(SomeNotInSetConstraint([(i+1)  for i in range(9) if (i!=k)])) #[1..9] at least one time 
     for k in range(9):
-        problem.addConstraint(SomeNotInSetConstraint([(k+1)],n=(3*n-2))) #[0..9] at most 2 times (this works for n>2 and n<=6, it's ok for our exercise)
+        problem.addConstraint(SomeNotInSetConstraint([(k+1)],n=(3*n-2))) #[1..9] at most 2 times (this works for n>2 and n<=6, it's ok for our exercise)
 
-for k in range(n-1):   
-    problem.addConstraint(lambda a, b: a >= b,(str(k+2), str(k+1))) #set X1<=X2<=..<=Xn 
-
-
+if(n>2):
+    for k in range(n-1):   
+        problem.addConstraint(lambda a, b: a >= b,(str(k+2), str(k+1))) #set X1<=X2<=..<=Xn 
+else:
+    for k in range(n-1):   
+        problem.addConstraint(lambda a, b: a > b,(str(k+2), str(k+1))) #set X1<X2<..<Xn 
+    for k in range(9):
+        problem.addConstraint(SomeNotInSetConstraint([(k+1)],n=(3*n-1))) #[1..9] at most 1 time 
+ 
 
 
 
